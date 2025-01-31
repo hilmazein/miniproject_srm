@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div class="flex">
+    <div class="bg-gray-900 text-white w-64 min-h-screen p-4 fixed h-full">
+        <h2 class="text-xl font-bold mb-6">RiskManager</h2>
+        <nav>
+            <ul>
+                <li class="mb-4"><a href="/" class="text-gray-300 hover:text-white">Dashboard</a></li>
+                <li class="mb-4"><a href="/assessments" class="text-gray-300 hover:text-white">Assessments</a></li>
+                <li class="mb-4"><a href="/reports" class="text-gray-300 hover:text-white">Reports</a></li>
+                <li class="mb-4"><a href="/profile" class="text-gray-300 hover:text-white">Profile</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container mx-auto p-6 max-w-lg">
+        <h1 class="text-2xl font-bold mb-4 text-center">Profile</h1>
+        <p class="text-gray-700 text-center">Manage your user profile and preferences.</p>
+        
+        <div class="bg-white shadow rounded-lg p-6 mt-6">
+            <h2 class="text-lg font-semibold mb-4">User Information</h2>
+            
+            <!-- Profile Picture Upload -->
+            <div class="flex flex-col items-center mb-4">
+                <img id="profile-pic" class="w-24 h-24 rounded-full border border-gray-300" src="https://via.placeholder.com/100" alt="Profile Picture">
+                <input type="file" id="profile-pic-upload" class="hidden" accept="image/*">
+                <button onclick="document.getElementById('profile-pic-upload').click();" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Choose Photo</button>
+            </div>
+            
+            <!-- User Details Form -->
+            <label class="block mt-4">
+                <span class="text-gray-700">Full Name</span>
+                <input type="text" class="border p-2 rounded w-full mt-2" placeholder="Enter your full name">
+            </label>
+            <label class="block mt-4">
+                <span class="text-gray-700">Email Address</span>
+                <input type="email" class="border p-2 rounded w-full mt-2" placeholder="Enter your email">
+            </label>
+            <label class="block mt-4">
+                <span class="text-gray-700">Password</span>
+                <input type="password" class="border p-2 rounded w-full mt-2" placeholder="Enter your password">
+            </label>
+            
+            <button class="mt-6 bg-green-500 text-white px-4 py-2 rounded w-full" onclick="saveProfile()">Save Profile</button>
+        </div>
+    </div>
+</div>
+    
+    <script>
+        document.getElementById("profile-pic-upload").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("profile-pic").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function saveProfile() {
+            alert("Profile saved successfully!");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cybersecurity Risk Assessment - NIST 800-30</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    </head>
+<body class="bg-gray-100">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="bg-gray-900 text-white w-64 min-h-screen p-4 fixed h-full">
+            <h2 class="text-xl font-bold mb-6">RiskManager</h2>
+            <nav>
+                <ul>
+                    <li class="mb-4"><a href="/" class="text-gray-300 hover:text-white">Dashboard</a></li>
+                    <li class="mb-4"><a href="/assessments" class="text-gray-300 hover:text-white">Assessments</a></li>
+                    <li class="mb-4"><a href="/reports" class="text-gray-300 hover:text-white">Reports</a></li>
+                    <li class="mb-4"><a href="/profile" class="text-gray-300 hover:text-white">Profile</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-6 ml-64">
+            <h1 class="text-2xl font-bold mb-4">Cybersecurity Risk Assessment - NIST 800-30</h1>
+            <p class="mb-4">Complete each step of the risk assessment process.</p>
+            
+            <!-- Project Name Field -->
+            <div class="bg-white shadow rounded-lg p-6 mb-6">
+                <h3 class="text-lg font-semibold mb-4">Project Information</h3>
+                <div class="mb-4">
+                    <label for="project_name" class="block mb-2">Project Name:</label>
+                    <input type="text" id="project_name" class="w-full p-2 border rounded" placeholder="Enter project name">
+                </div>
+            </div>            
+
+            <div id="assessment-steps">
+                <!-- Step 1: System Characterization -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Step 1: System Characterization</h3>
+                    <div class="mb-4">
+                        <label for="system_boundaries" class="block mb-2">System Boundaries:</label>
+                        <textarea id="system_boundaries" class="w-full p-2 border rounded" placeholder="Define the scope of the IT system, including resources and information"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="system_functions" class="block mb-2">System Functions:</label>
+                        <textarea id="system_functions" class="w-full p-2 border rounded" placeholder="Describe the purpose and functions of the system"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="system_criticality" class="block mb-2">System and Data Criticality:</label>
+                        <textarea id="system_criticality" class="w-full p-2 border rounded" placeholder="Assess criticality of system and data to the organization"></textarea>
+                    </div>
+                    <div>
+                        <label for="data_sensitivity" class="block mb-2">System and Data Sensitivity:</label>
+                        <textarea id="data_sensitivity" class="w-full p-2 border rounded" placeholder="Evaluate the sensitivity of system and data"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Threat Identification -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Step 2: Threat Identification</h3>
+                    <div class="mb-4">
+                        <label for="threat_sources" class="block mb-2">Sources of Threat:</label>
+                        <textarea id="threat_sources" class="w-full p-2 border rounded" placeholder="Identify threat sources for the IT system"></textarea>
+                    </div>
+                    <div>
+                        <label for="threat_events" class="block mb-2">Potential Threat Events:</label>
+                        <textarea id="threat_events" class="w-full p-2 border rounded" placeholder="Determine potential threat events, relevance, and threat sources' motivation and capability"></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 3: Vulnerability Identification -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Step 3: Vulnerability Identification</h3>
+                    <div class="mb-4">
+                        <label for="vulnerability_sources" class="block mb-2">Vulnerability Sources:</label>
+                        <textarea id="vulnerability_sources" class="w-full p-2 border rounded" placeholder="Identify sources for potential vulnerabilities"></textarea>
+                    </div>
+                    <div>
+                        <label for="system_vulnerabilities" class="block mb-2">System Vulnerabilities:</label>
+                        <textarea id="system_vulnerabilities" class="w-full p-2 border rounded" placeholder="Identify and document system vulnerabilities"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Control Analysis -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Step 4: Control Analysis</h3>
+                    <div>
+                        <label for="current_controls" class="block mb-2">Current Controls:</label>
+                        <textarea id="current_controls" class="w-full p-2 border rounded" placeholder="Analyze current controls and their effectiveness"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Step 5: Likelihood Determination -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Step 5: Likelihood Determination</h3>
+                    <div class="mb-4">
+                        <label for="likelihood_initiation" class="block mb-2">Likelihood of Threat Event Initiation:</label>
+                        <input type="number" id="likelihood_initiation" class="w-full p-2 border rounded" min="1" max="5" placeholder="Rate 1-5, 5 being most likely">
+                    </div>
+                    <div class="mb-4">
+                        <label for="likelihood_success" class="block mb-2">Likelihood of Threat Event Success:</label>
+                        <input type="number" id="likelihood_success" class="w-full p-2 border rounded" min="1" max="5" placeholder="Rate 1-5, 5 being most likely">
+                    </div>
+                    <div>
+                        <label for="likelihood_overall" class="block mb-2">Overall Likelihood:</label>
+                        <input type="number" id="likelihood_overall" class="w-full p-2 border rounded" min="1" max="5" placeholder="Rate 1-5, 5 being most likely">
+                    </div>
+                </div>
+                
+                <!-- Step 6: Impact Analysis -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Step 6: Impact Analysis</h3>
+                    <div class="mb-4">
+                        <label for="impact_confidentiality" class="block mb-2">Impact on Confidentiality:</label>
+                        <input type="number" id="impact_confidentiality" class="w-full p-2 border rounded" min="1" max="5" placeholder="Rate 1-5, 5 being highest">
+                    </div>
+                    <div class="mb-4">
+                        <label for="impact_integrity" class="block mb-2">Impact on Integrity:</label>
+                        <input type="number" id="impact_integrity" class="w-full p-2 border rounded" min="1" max="5" placeholder="Rate 1-5, 5 being highest">
+                    </div>
+                    <div class="mb-4">
+                        <label for="impact_availability" class="block mb-2">Impact on Availability:</label>
+                        <input type="number" id="impact_availability" class="w-full p-2 border rounded" min="1" max="5" placeholder="Rate 1-5, 5 being highest">
+                    </div>
+                    <div>
+                        <label for="impact_overall" class="block mb-2">Overall Impact:</label>
+                        <input type="number" id="impact_overall" class="w-full p-2 border rounded" min="1" max="5" placeholder="Rate 1-5, 5 being highest">
+                    </div>
+                </div>
+                
+                <!-- Step 7: Risk Determination -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Step 7: Risk Determination</h3>
+                    <div>
+                        <label for="risk_level" class="block mb-2">Determined Risk Level:</label>
+                        <input type="text" id="risk_level" class="w-full p-2 border rounded" placeholder="Very Low, Low, Moderate, High, Very High">
+                    </div>
+                </div>
+                
+                <!-- Step 8: Control Recommendations -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Step 8: Control Recommendations</h3>
+                    <div>
+                        <label for="recommended_controls" class="block mb-2">Recommended Controls:</label>
+                        <textarea id="recommended_controls" class="w-full p-2 border rounded" placeholder="Provide control recommendations to mitigate risks"></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 9: Results Documentation -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Step 9: Results Documentation</h3>
+                    <div>
+                        <label for="report" class="block mb-2">Risk Assessment Report:</label>
+                        <textarea id="report" class="w-full p-2 border rounded" placeholder="Document the risk assessment results"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="bg-indigo-600 text-white px-4 py-2 rounded" onclick="saveAssessment()">Save Assessment</button>
+            <button class="bg-green-600 text-white px-4 py-2 rounded ml-2" onclick="generatePDF()">Download as PDF</button>
+            
+            <div id="charts" class="mt-6 hidden">
+                <h3 class="text-lg font-semibold mb-4">Assessment Results</h3>
+                <div id="risk-chart"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function saveAssessment() {
+            const data = {
+                project_name: document.getElementById('project_name').value,
+                system_boundaries: document.getElementById('system_boundaries').value,
+                system_functions: document.getElementById('system_functions').value,
+                system_criticality: document.getElementById('system_criticality').value,
+                data_sensitivity: document.getElementById('data_sensitivity').value,
+                threat_sources: document.getElementById('threat_sources').value,
+                threat_events: document.getElementById('threat_events').value,
+                vulnerability_sources: document.getElementById('vulnerability_sources').value,
+                system_vulnerabilities: document.getElementById('system_vulnerabilities').value,
+                current_controls: document.getElementById('current_controls').value,
+                likelihood_initiation: document.getElementById('likelihood_initiation').value,
+                likelihood_success: document.getElementById('likelihood_success').value,
+                likelihood_overall: document.getElementById('likelihood_overall').value,
+                impact_confidentiality: document.getElementById('impact_confidentiality').value,
+                impact_integrity: document.getElementById('impact_integrity').value,
+                impact_availability: document.getElementById('impact_availability').value,
+                impact_overall: document.getElementById('impact_overall').value,
+                risk_level: document.getElementById('risk_level').value,
+                recommended_controls: document.getElementById('recommended_controls').value,
+                report: document.getElementById('report').value
+            };
+            
+            fetch('/save-assessment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(response => response.json()).then(result => {
+                alert('Assessment saved successfully!');
+                displayCharts(data);
+            });
+        }
+        
+        function displayCharts(data) {
+            document.getElementById('charts').classList.remove('hidden');
+            
+            const chartData = [{
+                type: 'pie',
+                labels: ['Likelihood', 'Impact', 'Risk'],
+                values: [data.likelihood_overall, data.impact_overall, getRiskValue(data.risk_level)]
+            }];
+            Plotly.newPlot('risk-chart', chartData);
+        }
+
+        function getRiskValue(riskLevel) {
+            switch(riskLevel) {
+                case 'Very Low':
+                    return 1;
+                case 'Low':
+                    return 2;
+                case 'Moderate':
+                    return 3;
+                case 'High':
+                    return 4;
+                case 'Very High':
+                    return 5;
+                default:
+                    return 0;
+            }
+        }
+        
+        function generatePDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

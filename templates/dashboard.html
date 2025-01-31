@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="bg-gray-900 text-white w-64 min-h-screen p-4 fixed h-full">
+            <h2 class="text-xl font-bold mb-6">RiskManager</h2>
+            <nav>
+                <ul>
+                    <li class="mb-4"><a href="#" class="text-gray-300 hover:text-white">Dashboard</a></li>
+                    <li class="mb-4"><a href="/assessments" class="text-gray-300 hover:text-white">Assessments</a></li>
+                    <li class="mb-4"><a href="/reports" class="text-gray-300 hover:text-white">Reports</a></li>
+                    <li class="mb-4"><a href="/profile" class="text-gray-300 hover:text-white">Profile</a></li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Main Content -->
+        <div class="flex-1 p-6 ml-64">
+            <h1 class="text-2xl font-bold mb-4">Risk Management System</h1>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <!-- Total Risks -->
+                <div class="bg-white shadow rounded-lg p-4">
+                    <p class="text-sm text-gray-500">Total Risks</p>
+                    <h3 class="text-xl font-bold">{{ total_risks }}</h3>
+                </div>
+                <!-- Critical Risks -->
+                <div class="bg-white shadow rounded-lg p-4">
+                    <p class="text-sm text-gray-500">Critical Risks</p>
+                    <h3 class="text-xl font-bold">{{ critical_risks }}</h3>
+                </div>
+                <!-- Mitigated Risks -->
+                <div class="bg-white shadow rounded-lg p-4">
+                    <p class="text-sm text-gray-500">Mitigated Risks</p>
+                    <h3 class="text-xl font-bold">{{ mitigated_risks }}</h3>
+                </div>
+                <!-- Active Threats -->
+                <div class="bg-white shadow rounded-lg p-4">
+                    <p class="text-sm text-gray-500">Active Threats</p>
+                    <h3 class="text-xl font-bold">{{ active_threats }}</h3>
+                </div>
+            </div>
+            <!-- Risk Analytic Dashboard (Grafana) -->
+            <div class="bg-white shadow rounded-lg p-6 mb-6">
+                <h3 class="text-lg font-semibold mb-4">Risk Analytic Dashboard (Grafana)</h3>
+                <iframe
+                    src="https://play.grafana.org/d/000000012/grafana-play-home?orgId=1"
+                    width="100%"
+                    height="400"
+                    frameborder="0"
+                ></iframe>
+            </div>
+            <!-- Risk Distribution -->
+            <div class="bg-white shadow rounded-lg p-6 mb-6">
+                <h3 class="text-lg font-semibold mb-4">Risk Distribution</h3>
+                <div id="bar-chart"></div>
+            </div>
+            <!-- Threat Trends -->
+            <div class="bg-white shadow rounded-lg p-6">
+                <h3 class="text-lg font-semibold mb-4">Threat Trends</h3>
+                <div id="line-chart"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Load bar chart
+        const barChartData = {{ bar_chart_json | safe }};
+        Plotly.newPlot("bar-chart", barChartData.data, barChartData.layout);
+
+        // Load line chart
+        const lineChartData = {{ line_chart_json | safe }};
+        Plotly.newPlot("line-chart", lineChartData.data, lineChartData.layout);
+    </script>
+</body>
+</html>

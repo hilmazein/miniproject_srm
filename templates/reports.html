@@ -1,0 +1,71 @@
+<!-- reports.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+</head>
+<body class="bg-gray-100">
+<div class="flex">
+    <div class="bg-gray-900 text-white w-64 min-h-screen p-4 fixed h-full">
+        <h2 class="text-xl font-bold mb-6">RiskManager</h2>
+        <nav>
+            <ul>
+                <li class="mb-4"><a href="/" class="text-gray-300 hover:text-white">Dashboard</a></li>
+                <li class="mb-4"><a href="/assessments" class="text-gray-300 hover:text-white">Assessments</a></li>
+                <li class="mb-4"><a href="/reports" class="text-gray-300 hover:text-white">Reports</a></li>
+                <li class="mb-4"><a href="/profile" class="text-gray-300 hover:text-white">Profile</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="flex-1 p-6 ml-64">
+        <h1 class="text-2xl font-bold mb-4">Risk Assessment Reports</h1>
+        
+        <!-- Report Filters -->
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Filter by Category:</label>
+            <select class="border rounded p-2 w-full">
+                <option>All</option>
+                <option>High Risk</option>
+                <option>Medium Risk</option>
+                <option>Low Risk</option>
+            </select>
+        </div>
+        
+        <!-- Risk Chart -->
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+            <h3 class="text-lg font-semibold mb-4">Risk Report Overview</h3>
+            <div id="risk-chart"></div>
+        </div>
+        
+        <!-- Risk Report Table -->
+        <div class="bg-white shadow rounded-lg p-6">
+            <h3 class="text-lg font-semibold mb-4">Detailed Report</h3>
+            <table class="w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="border p-2">ID</th>
+                        <th class="border p-2">Risk Name</th>
+                        <th class="border p-2">Category</th>
+                        <th class="border p-2">Severity</th>
+                        <th class="border p-2">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    <script>
+        const riskChartData = {{ risk_chart_json | safe }};
+        Plotly.newPlot("risk-chart", riskChartData.data, riskChartData.layout);
+    </script>
+</body>
+</html>
+
