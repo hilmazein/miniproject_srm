@@ -36,15 +36,15 @@
             <!-- User Details Form -->
             <label class="block mt-4">
                 <span class="text-gray-700">Full Name</span>
-                <input type="text" class="border p-2 rounded w-full mt-2" placeholder="Enter your full name">
+                <input type="text" id="full-name" class="border p-2 rounded w-full mt-2" placeholder="Enter your full name">
             </label>
             <label class="block mt-4">
                 <span class="text-gray-700">Email Address</span>
-                <input type="email" class="border p-2 rounded w-full mt-2" placeholder="Enter your email">
+                <input type="email" id="email" class="border p-2 rounded w-full mt-2" placeholder="Enter your email">
             </label>
             <label class="block mt-4">
                 <span class="text-gray-700">Password</span>
-                <input type="password" class="border p-2 rounded w-full mt-2" placeholder="Enter your password">
+                <input type="password" id="password" class="border p-2 rounded w-full mt-2" placeholder="Enter your password">
             </label>
             
             <button class="mt-6 bg-green-500 text-white px-4 py-2 rounded w-full" onclick="saveProfile()">Save Profile</button>
@@ -53,6 +53,18 @@
 </div>
     
     <script>
+        // Load profile data from localStorage if available
+        window.onload = function() {
+            const profileData = JSON.parse(localStorage.getItem("userProfile"));
+            if (profileData) {
+                document.getElementById("profile-pic").src = profileData.profilePic || "https://via.placeholder.com/100";
+                document.getElementById("full-name").value = profileData.fullName || "";
+                document.getElementById("email").value = profileData.email || "";
+                document.getElementById("password").value = profileData.password || "";
+            }
+        };
+
+        // Event listener for profile picture upload
         document.getElementById("profile-pic-upload").addEventListener("change", function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -64,7 +76,16 @@
             }
         });
 
+        // Save profile data to localStorage
         function saveProfile() {
+            const profileData = {
+                profilePic: document.getElementById("profile-pic").src,
+                fullName: document.getElementById("full-name").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value
+            };
+
+            localStorage.setItem("userProfile", JSON.stringify(profileData));
             alert("Profile saved successfully!");
         }
     </script>
